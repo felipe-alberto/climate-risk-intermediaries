@@ -1,0 +1,311 @@
+﻿intermediary_id,intermediary_name,program_id,program_name,variable_code,value,unit,measure_type,policy_year_start,policy_year_end
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,16,N,count,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,17,N,count,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,14,N,count,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,21,N,count,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,13,N,count,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,29,N,count,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,39,N,count,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,49,N,count,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,55,N,count,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ALL,Aggregate,reported_events,43,N,count,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,4,N,count,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,3,N,count,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,3,N,count,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,8,N,count,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,0,N,count,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,3,N,count,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,8,N,count,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,14,N,count,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,13,N,count,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,reported_events,4,N,count,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,4,N,count,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,7,N,count,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,9,N,count,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,11,N,count,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,8,N,count,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,8,N,count,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,16,N,count,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,23,N,count,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,21,N,count,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,reported_events,8,N,count,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,8,N,count,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,7,N,count,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,2,N,count,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,2,N,count,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,5,N,count,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,16,N,count,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,15,N,count,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,10,N,count,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,21,N,count,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,reported_events,26,N,count,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,2,N,count,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,2,N,count,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,0,N,count,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST,Coastal Protection,reported_events,3,N,count,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,0,N,count,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_ELEC,Electric Utilities,reported_events,2,N,count,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$18,357,500 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$24,325,646 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$21,417,733 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$23,727,901 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$27,096,695 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$28,264,800 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$30,155,440 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$32,615,455 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$34,640,341 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parmetric_insurance_contracts_income,"$30,045,169 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$3,951,250 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$6,816,085 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$6,269,830 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$7,648,790 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$8,860,628 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$10,713,031 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$11,881,629 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$12,385,605 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$14,896,495 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parmetric_insurance_contracts_income,"$16,640,312 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parmetric_insurance_contracts_income,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$1,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$1,500,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$2,300,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$2,800,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$3,030,137 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$4,584,931 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$3,800,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$3,749,483 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parmetric_insurance_contracts_income,"$8,453,835 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,"$200,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,"$191,781 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,"$209,091 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,"$209,091 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parmetric_insurance_contracts_income,"$220,000 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,"$144,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,"$158,400 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,"$627,921 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CPU_SP,CPU_SP,parmetric_insurance_contracts_income,"$751,677 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$21,363,067 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$49,573,165 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$91,438 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$11,878,556 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$1,026,277 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$41,827,284 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"$722,427 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_paid,"988,078",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$3,393,004 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$2,402,153 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$8,102,255 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$12,452,874 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$8,347,850 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$1,863,121 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$7,340,104 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$3,505,888 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$8,118,359 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_paid,"$4,942,525 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_paid,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,"$1,610,193 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,"$3,628,013 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,"$30,640,707 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,"$8,924,577 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_paid,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_paid,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,"$24,573,165 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,"$14,327,284 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,"$893,004 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,"$1,102,255 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,"$4,752,875 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,"$647,850 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_claims_recovered,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_LPC_SP,LPC SP,parametric_insurance_claims_recovered,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,"$110,193 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,"$528,013 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,"$23,684,686 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,"$7,424,577 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_CA_SP,CA_SP,parametric_insurance_claims_recovered,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_COAST_SP,COAST SP,parametric_insurance_claims_recovered,$0 ,USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$388,000,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$294,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$342,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$369,000,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$405,600,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$436,200,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$453,634,235 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$499,287,084 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$554,612,029 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_TC,Tropical Cyclone,parametric_contracts_combined_aggregate_coverage,"$562,733,513 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$266,000,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$147,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$281,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$283,000,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$290,100,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$388,900,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$408,178,446 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$428,692,699 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$446,948,581 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQ,Earthquake,parametric_contracts_combined_aggregate_coverage,"$281,796,530 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,NA,USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$55,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$74,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$104,000,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$123,300,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$96,200,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$108,489,104 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$114,133,783 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$140,964,802 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR,Excess Rainfall,parametric_contracts_combined_aggregate_coverage,"$127,901,972 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$25,000,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$30,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$25,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$25,000,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$25,000,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$25,000,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$25,000,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$27,500,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$29,000,000 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_first_loss_retention,"$29,000,000 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$2,500,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$7,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$7,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$7,700,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$7,700,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$7,700,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$12,000,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$12,000,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$14,500,000 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_first_loss_retention,"$14,500,000 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$120,000,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$138,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$138,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$145,000,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$145,000,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$167,500,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$175,000,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$172,500,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$181,000,000 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_reinsurance_tranche,"$181,000,000 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$32,500,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$35,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$35,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$36,500,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$36,500,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$36,500,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$38,000,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$38,000,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$42,000,000 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_reinsurance_tranche,"$36,000,000 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$145,000,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$168,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$163,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$170,000,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$170,000,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$192,500,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$200,000,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$200,000,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$210,000,000 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_EQTC_SP,EQ/TC SPC,parametric_insurance_excess_loss_cutoff,"$210,000,000 ",USD,value,2023,2024
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$35,000,000 ",USD,value,2014,2015
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$42,000,000 ",USD,value,2015,2016
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$42,000,000 ",USD,value,2016,2017
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$44,200,000 ",USD,value,2017,2018
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$44,200,000 ",USD,value,2018,2019
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$44,200,000 ",USD,value,2019,2020
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$50,000,000 ",USD,value,2020,2021
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$50,000,000 ",USD,value,2021,2022
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$56,500,000 ",USD,value,2022,2023
+INT_001,Caribbean Catastrophe Risk Insurance Facility,CCRIF_XSR_SP,XSR SPC,parametric_insurance_excess_loss_cutoff,"$50,500,000 ",USD,value,2023,2024
