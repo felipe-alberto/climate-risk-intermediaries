@@ -1,0 +1,38 @@
+ID,Year,Month,Day,Country,Amount (USD),Event Name,Event Type,Policy_clean,Hazard
+CCRIF-PO-0003,2008,9,1,Turks and Caicos Islands,6303913,Ike,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0005,2010,8,1,Anguilla,4282733,Earl,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0006,2010,10,1,Barbados,8560247,Tomas,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0007,2010,10,1,St. Lucia,3241613,Tomas,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0008,2010,10,1,St. Vincent and the Grenadines,1090388,Tomas,Tropical Cyclone,CCRIF-TC,tc
+
+CCRIF-PO-0010,2014,11,,Anguilla,559249,Trough System,Rainfall Event,CCRIF-XSR,rain
+CCRIF-PO-0011,2014,11,,St. Kitts and Nevis,1055408,Trough System,Rainfall Event,CCRIF-XSR,rain
+CCRIF-PO-0012,2014,11,,Barbados,1284882,Trough System,Rainfall Event,CCRIF-XSR,rain
+
+CCRIF-PO-0016,2016,9,,Barbados,975000,Matthew,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0020,2016,10,,Haiti,20388067,Matthew,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0022,2016,11,,Nicaragua,1110193,Otto,Tropical Cyclone,CCRIF-TC,tc
+
+CCRIF-PO-0023,2017,9,,St. Kitts and Nevis,2294603,Irma,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0024,2017,9,,Anguilla,6529100,Irma,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0026,2017,9,,Antigua and Barbuda,6794875,Irma,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0027,2017,9,,Turks and Caicos Islands,13631865,Irma,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0030,2017,9,,Dominica,19294800,María,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0032,2017,9,,St. Lucia,671013,María,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0033,2017,9,,Turks and Caicos Islands,419372,María,Tropical Cyclone,CCRIF-TC,tc
+
+CCRIF-PO-0039,2019,9,,Bahamas,11527151,Dorian,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-NEW,2020,11,,Nicaragua,7793524,Eta,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0057,2022,10,8,Nicaragua,8924577,Julia,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0059,2022,11,,Belize,455000,Lisa,Tropical Cyclone,CCRIF-TC,tc
+
+CCRIF-PO-0065,2024,7,,St. Vincent and the Grenadines,1862728,Beryl,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0066,2024,7,,Grenada,42425110,Beryl,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0072,2024,7,,Jamaica,16309185,Beryl,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0074,2024,7,,Cayman Turtle Conservation Centre,119474,Beryl,Tropical Cyclone,CCRIF-TC,tc
+
+CCRIF-PO-0076,2024,11,4,Panama,19100504,Rainfall Event,Rainfall Event,CCRIF-XSR,rain
+
+CCRIF-PO-0078,2025,10,,Bahamas,448096,Imelda,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0079,2025,10,,Bahamas,849781,Imelda,Tropical Cyclone,CCRIF-TC,tc
+CCRIF-PO-0080,2025,10,,Jamaica,70803832,Melissa,Tropical Cyclone,CCRIF-TC,tc

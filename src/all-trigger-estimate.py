@@ -70,6 +70,21 @@ HAZARD_CONFIGS = {
 # HELPERS
 # ============================================================
 
+def map_policy_to_hazard(policy: str) -> str:
+    if pd.isna(policy):
+        return "unknown"
+
+    p = str(policy).upper()
+
+    if "XSR" in p:
+        return "rain"
+    if "TC" in p:
+        return "tc"
+    if "EQ" in p:
+        return "earthquake"
+
+    return "other"
+
 def clean_amount_usd(series: pd.Series) -> pd.Series:
     return pd.to_numeric(
         series.astype(str)
@@ -79,6 +94,9 @@ def clean_amount_usd(series: pd.Series) -> pd.Series:
         .replace({"": pd.NA, "nan": pd.NA}),
         errors="coerce",
     )
+
+def get_payouts_for_hazard(payouts: pd.DataFrame, hazard: str) -> pd.DataFrame:
+    return payouts[payouts["hazard"] == hazard].copy()
 
 
 def get_policy_year_label(date: pd.Timestamp) -> str:
@@ -185,17 +203,8 @@ def load_hazard_panel(hazard: str, config: dict) -> pd.DataFrame:
 
 
 def load_payouts() -> pd.DataFrame:
-    if not PAYOUT_FILE.exists():
-        raise FileNotFoundError(f"Payout file not found: {PAYOUT_FILE}")
-
     payouts = pd.read_csv(PAYOUT_FILE)
 
-    required = ["Country", "Year", "Month", "Day", "Amount (USD)"]
-    missing = [c for c in required if c not in payouts.columns]
-    if missing:
-        raise ValueError(f"Payout file missing columns: {missing}")
-
-    payouts = payouts.copy()
     payouts["country"] = payouts["Country"].astype(str).str.strip()
     payouts["amount_usd"] = clean_amount_usd(payouts["Amount (USD)"])
 
@@ -205,53 +214,28 @@ def load_payouts() -> pd.DataFrame:
 
     payouts = payouts.dropna(subset=["Year", "Month"]).copy()
 
-    payouts["Year"] = payouts["Year"].astype(int)
-    payouts["Month"] = payouts["Month"].astype(int)
-    payouts["Day"] = payouts["Day"].astype(int)
-
     payouts["date"] = pd.to_datetime(
         dict(year=payouts["Year"], month=payouts["Month"], day=payouts["Day"]),
         errors="coerce",
     )
 
     payouts = payouts.dropna(subset=["date"]).copy()
+
     payouts["plot_date"] = payouts["date"].dt.to_period("M").dt.to_timestamp()
     payouts["policy_year"] = payouts["plot_date"].apply(get_policy_year_label)
 
-    text_cols = [
-        c for c in [
-            "Event Type",
-            "Policy",
-            "Policy Type",
-            "Product",
-            "Trigger",
-            "Event Name",
-        ]
-        if c in payouts.columns
-    ]
+    # Classification based on Policy
+    payouts["policy_clean"] = payouts["Policy"].astype(str).str.strip().str.upper()
 
-    payouts["_hazard_text"] = ""
-    for c in text_cols:
-        payouts["_hazard_text"] += " " + payouts[c].map(normalize_text)
+    # Classification based on insured policy/product, not event type
+    payouts["policy_clean"] = payouts["Policy"].astype(str).str.strip().str.upper()
+    payouts["hazard"] = payouts["policy_clean"].apply(map_policy_to_hazard)
 
-    return payouts.sort_values(["country", "plot_date", "date"]).reset_index(drop=True)
+    # Keep only core hazards used in trigger-proxy evaluation
+    payouts = payouts[payouts["hazard"].isin(["rain", "tc", "earthquake"])].copy()
 
+    return payouts.sort_values(["country", "plot_date"]).reset_index(drop=True)
 
-def filter_payouts_for_hazard(
-    payouts: pd.DataFrame,
-    hazard: str,
-    config: dict,
-) -> pd.DataFrame:
-    keywords = [k.lower() for k in config["payout_keywords"]]
-
-    if "_hazard_text" not in payouts.columns:
-        return payouts.iloc[0:0].copy()
-
-    mask = payouts["_hazard_text"].apply(
-        lambda s: any(k in s for k in keywords)
-    )
-
-    return payouts[mask].copy()
 
 
 def restrict_payouts_to_hazard_window(
@@ -490,17 +474,8 @@ def main():
         print(f"Using panel file: {config['panel_file']}")
 
         hazard_panel = load_hazard_panel(hazard, config)
-
-        payouts_hazard = filter_payouts_for_hazard(
-            payouts=payouts,
-            hazard=hazard,
-            config=config,
-        )
-
-        payouts_hazard = restrict_payouts_to_hazard_window(
-            payouts=payouts_hazard,
-            config=config,
-        )
+        payouts_hazard = get_payouts_for_hazard(payouts, hazard)
+        payouts_hazard = restrict_payouts_to_hazard_window(payouts_hazard, config)
 
         print(f"Loaded {len(hazard_panel):,} hazard-panel rows")
         print(f"Matched {len(payouts_hazard):,} payout rows for hazard={hazard}")
