@@ -206,6 +206,12 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Data
-data/processed
-data/raw/chirps
+# Ignore all raw data
+data/raw/*
+
+# BUT include climate risk pool data
+!data/raw/climate-risk-pools/
+!data/raw/climate-risk-pools/**
+
+# Deprecated code/data folders
+**/_deprecated_files/
