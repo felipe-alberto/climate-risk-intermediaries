@@ -1,0 +1,4 @@
+
+- Benchmark payouts against fiscal spending
+- Are parametric insurance payouts complements or substitutes to other funding sources? 
+- RQ: Are countries efficiently insured? 
