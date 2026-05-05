@@ -290,64 +290,66 @@ def build_hazard_payout_panel(
 # THRESHOLD EVALUATION
 # ============================================================
 
-NEAR_BANDWIDTH_PCTS = [0.05, 0.10]
+NEAR_BELOW_BANDWIDTH_PCTS = [0.05, 0.10]
 
 
 def add_threshold_flags(
     g: pd.DataFrame,
     threshold: float,
-    bandwidth_pcts: list[float] = NEAR_BANDWIDTH_PCTS,
+    bandwidth_pcts: list[float] = NEAR_BELOW_BANDWIDTH_PCTS,
 ) -> pd.DataFrame:
     """
-    Add global and near-threshold classification flags.
+    Add classification and below-threshold near-control flags.
 
-    Definitions:
-        predicted = 1 if hazard_index >= threshold
-        actual    = 1 if has_payout == 1
+    Canonical classification:
+        TP: index >= threshold and payout
+        FP: index >= threshold and no payout
+        FN: index <  threshold and payout
+        TN: index <  threshold and no payout
 
-    Confusion matrix:
-        TP: above threshold, payout
-        FP: above threshold, no payout
-        FN: below threshold, payout
-        TN: below threshold, no payout
+    RDD logic:
+        - All FP months are useful untreated high-index months:
+              index >= threshold, no payout.
 
-    Near-threshold windows:
-        near_below_Xpct:
-            index in [(1-X)*threshold, threshold)
+        - TN months are useful only if they are close below the threshold:
+              index in [(1 - bw) * threshold, threshold), no payout.
 
-        near_above_Xpct:
-            index in [threshold, (1+X)*threshold]
-
-    These are useful RDD diagnostics because they isolate observations
-    close to the estimated cutoff.
+    Therefore, the bandwidth is applied only below the threshold.
     """
     g = g.copy()
 
     g["above_threshold"] = g["hazard_index"] >= threshold
     g["below_threshold"] = g["hazard_index"] < threshold
 
-    g["tp"] = (g["above_threshold"] & (g["has_payout"] == 1)).astype(int)
-    g["fp"] = (g["above_threshold"] & (g["has_payout"] == 0)).astype(int)
-    g["fn"] = (g["below_threshold"] & (g["has_payout"] == 1)).astype(int)
-    g["tn"] = (g["below_threshold"] & (g["has_payout"] == 0)).astype(int)
+    g["tp"] = (
+        g["above_threshold"]
+        & (g["has_payout"] == 1)
+    ).astype(int)
+
+    g["fp"] = (
+        g["above_threshold"]
+        & (g["has_payout"] == 0)
+    ).astype(int)
+
+    g["fn"] = (
+        g["below_threshold"]
+        & (g["has_payout"] == 1)
+    ).astype(int)
+
+    g["tn"] = (
+        g["below_threshold"]
+        & (g["has_payout"] == 0)
+    ).astype(int)
 
     for bw in bandwidth_pcts:
         label = int(round(100 * bw))
-
         lower = threshold * (1 - bw)
-        upper = threshold * (1 + bw)
 
         g[f"near_below_{label}pct"] = (
             (g["hazard_index"] >= lower)
             & (g["hazard_index"] < threshold)
         ).astype(int)
 
-        g[f"near_above_{label}pct"] = (
-            (g["hazard_index"] >= threshold)
-            & (g["hazard_index"] <= upper)
-        ).astype(int)
-
-        # Local confusion buckets
         g[f"near_tn_below_{label}pct"] = (
             (g[f"near_below_{label}pct"] == 1)
             & (g["tn"] == 1)
@@ -356,16 +358,6 @@ def add_threshold_flags(
         g[f"near_fn_below_{label}pct"] = (
             (g[f"near_below_{label}pct"] == 1)
             & (g["fn"] == 1)
-        ).astype(int)
-
-        g[f"near_tp_above_{label}pct"] = (
-            (g[f"near_above_{label}pct"] == 1)
-            & (g["tp"] == 1)
-        ).astype(int)
-
-        g[f"near_fp_above_{label}pct"] = (
-            (g[f"near_above_{label}pct"] == 1)
-            & (g["fp"] == 1)
         ).astype(int)
 
     return g
@@ -403,9 +395,9 @@ def score_threshold(g: pd.DataFrame, threshold: float) -> dict:
         "threshold": threshold,
         "n_months": n,
         "tp": tp,
-        "tn": tn,
         "fp": fp,
         "fn": fn,
+        "tn": tn,
         "correct_total": tp + tn,
         "incorrect_total": fp + fn,
         "accuracy": (tp + tn) / n if n > 0 else np.nan,
@@ -416,6 +408,49 @@ def score_threshold(g: pd.DataFrame, threshold: float) -> dict:
         "f1": f1,
         "net_score": (tp + tn) - (fp + fn),
     }
+
+
+def summarize_below_threshold_near_controls(
+    g: pd.DataFrame,
+    threshold: float,
+    bandwidth_pcts: list[float] = NEAR_BELOW_BANDWIDTH_PCTS,
+) -> dict:
+    """
+    Summarize below-threshold near-control diagnostics.
+
+    near_tn_below_Xpct:
+        close-below-threshold, no payout.
+        These are your most useful untreated near-miss months.
+
+    near_fn_below_Xpct:
+        close-below-threshold, payout.
+        These are below-threshold treated months close to the cutoff.
+    """
+    g_scored = add_threshold_flags(g, threshold, bandwidth_pcts)
+
+    out = {}
+
+    for bw in bandwidth_pcts:
+        label = int(round(100 * bw))
+
+        near_below_n = int(g_scored[f"near_below_{label}pct"].sum())
+        near_tn = int(g_scored[f"near_tn_below_{label}pct"].sum())
+        near_fn = int(g_scored[f"near_fn_below_{label}pct"].sum())
+
+        near_below_payout_rate = (
+            near_fn / near_below_n
+            if near_below_n > 0
+            else np.nan
+        )
+
+        out.update({
+            f"near_below_{label}pct_n": near_below_n,
+            f"near_tn_below_{label}pct": near_tn,
+            f"near_fn_below_{label}pct": near_fn,
+            f"near_below_payout_rate_{label}pct": near_below_payout_rate,
+        })
+
+    return out
 
 
 def empty_threshold_result(base: dict) -> dict:
@@ -430,82 +465,25 @@ def empty_threshold_result(base: dict) -> dict:
         "f1": np.nan,
         "net_score": np.nan,
         "tp": np.nan,
-        "tn": np.nan,
         "fp": np.nan,
         "fn": np.nan,
+        "tn": np.nan,
+        "above_threshold_with_payout": np.nan,
+        "above_threshold_no_payout": np.nan,
+        "below_threshold_with_payout": np.nan,
+        "below_threshold_no_payout": np.nan,
+        "rdd_treated_n": np.nan,
+        "rdd_untreated_5pct_n": np.nan,
+        "rdd_untreated_10pct_n": np.nan,
     }
 
-    for bw in NEAR_BANDWIDTH_PCTS:
+    for bw in NEAR_BELOW_BANDWIDTH_PCTS:
         label = int(round(100 * bw))
         out.update({
             f"near_below_{label}pct_n": np.nan,
-            f"near_above_{label}pct_n": np.nan,
             f"near_tn_below_{label}pct": np.nan,
             f"near_fn_below_{label}pct": np.nan,
-            f"near_tp_above_{label}pct": np.nan,
-            f"near_fp_above_{label}pct": np.nan,
-            f"local_below_payout_rate_{label}pct": np.nan,
-            f"local_above_payout_rate_{label}pct": np.nan,
-            f"local_first_stage_{label}pct": np.nan,
-        })
-
-    return out
-
-
-def summarize_near_threshold_counts(
-    g: pd.DataFrame,
-    threshold: float,
-    bandwidth_pcts: list[float] = NEAR_BANDWIDTH_PCTS,
-) -> dict:
-    """
-    Produce near-cutoff diagnostics for RDD feasibility.
-
-    local_first_stage_Xpct is:
-        P(payout | near above cutoff) - P(payout | near below cutoff)
-    """
-    g_scored = add_threshold_flags(g, threshold, bandwidth_pcts)
-
-    out = {}
-
-    for bw in bandwidth_pcts:
-        label = int(round(100 * bw))
-
-        near_below_n = int(g_scored[f"near_below_{label}pct"].sum())
-        near_above_n = int(g_scored[f"near_above_{label}pct"].sum())
-
-        near_tn = int(g_scored[f"near_tn_below_{label}pct"].sum())
-        near_fn = int(g_scored[f"near_fn_below_{label}pct"].sum())
-        near_tp = int(g_scored[f"near_tp_above_{label}pct"].sum())
-        near_fp = int(g_scored[f"near_fp_above_{label}pct"].sum())
-
-        below_rate = (
-            near_fn / near_below_n
-            if near_below_n > 0
-            else np.nan
-        )
-
-        above_rate = (
-            near_tp / near_above_n
-            if near_above_n > 0
-            else np.nan
-        )
-
-        local_first_stage = (
-            above_rate - below_rate
-            if pd.notna(above_rate) and pd.notna(below_rate)
-            else np.nan
-        )
-
-        out.update({
-            f"near_below_{label}pct_n": near_below_n,
-            f"near_above_{label}pct_n": near_above_n,
-            f"near_tn_below_{label}pct": near_tn,
-            f"near_fn_below_{label}pct": near_fn,
-            f"near_tp_above_{label}pct": near_tp,
-            f"near_fp_above_{label}pct": near_fp,
-            f"local_below_payout_rate_{label}pct": below_rate,
-            f"local_above_payout_rate_{label}pct": above_rate,
-            f"local_first_stage_{label}pct": local_first_stage,
+            f"near_below_payout_rate_{label}pct": np.nan,
         })
 
     return out
@@ -557,7 +535,12 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
     )
 
     threshold = float(best["threshold"])
-    near_counts = summarize_near_threshold_counts(g, threshold)
+    near_counts = summarize_below_threshold_near_controls(g, threshold)
+
+    tp = int(best["tp"])
+    fp = int(best["fp"])
+    fn = int(best["fn"])
+    tn = int(best["tn"])
 
     return {
         **base,
@@ -570,19 +553,28 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
         "f1": best["f1"],
         "net_score": best["net_score"],
 
-        # canonical confusion matrix
-        "tp": int(best["tp"]),
-        "tn": int(best["tn"]),
-        "fp": int(best["fp"]),
-        "fn": int(best["fn"]),
+        # Canonical confusion matrix
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "tn": tn,
 
-        # readable aliases
-        "above_threshold_with_payout": int(best["tp"]),
-        "above_threshold_no_payout": int(best["fp"]),
-        "below_threshold_with_payout": int(best["fn"]),
-        "below_threshold_no_payout": int(best["tn"]),
+        # Readable aliases
+        "above_threshold_with_payout": tp,
+        "above_threshold_no_payout": fp,
+        "below_threshold_with_payout": fn,
+        "below_threshold_no_payout": tn,
 
-        # RDD-relevant near-cutoff diagnostics
+        # RDD interpretation
+        # Treated = all payout months, whether above or below the rule threshold.
+        "rdd_treated_n": tp + fn,
+
+        # Untreated = all above-threshold no-payout months
+        # plus close-below-threshold no-payout months.
+        "rdd_untreated_5pct_n": fp + near_counts.get("near_tn_below_5pct", 0),
+        "rdd_untreated_10pct_n": fp + near_counts.get("near_tn_below_10pct", 0),
+
+        # Below-threshold near-control diagnostics
         **near_counts,
     }
 
