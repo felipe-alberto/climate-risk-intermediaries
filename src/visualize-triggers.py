@@ -1,25 +1,25 @@
 """
 Plot threshold-fit time series for trigger proxies.
 
+Updated for multiple candidate index columns per hazard.
+
 Inputs:
     data/processed/trigger-proxies/panels/
-        trigger_panel_rain_2017_2024.csv
+        trigger_panel_rain_2007_2024.csv
         trigger_panel_tc_2017_2024.csv
         trigger_panel_earthquake_2007_2024.csv
 
     data/processed/trigger-proxies/thresholds/
-        trigger_thresholds_rain_2017_2024.csv
-        trigger_thresholds_tc_2017_2024.csv
-        trigger_thresholds_earthquake_2007_2024.csv
+        trigger_thresholds_<hazard>_<index_name>_<start>_<end>.csv
 
 Outputs:
     outputs/figures/trigger-proxies/threshold_fit/
-        threshold_fit_<hazard>_<ISO3>_<start>_<end>.png
+        <hazard>/<index_name>/
+            threshold_fit_<hazard>_<index_name>_<ISO3>_<start>_<end>.png
 """
 
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -31,20 +31,32 @@ import matplotlib.pyplot as plt
 OUT_DIR = Path("outputs/figures/trigger-proxies/threshold_fit")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+
 HAZARD_CONFIGS = {
     "rain": {
-        "start_year": 2017,
+        "start_year": 2007,
         "end_year": 2024,
         "panel_file": Path(
             "data/processed/trigger-proxies/panels/"
-            "trigger_panel_rain_2017_2024.csv"
+            "trigger_panel_rain_2007_2024.csv"
         ),
-        "threshold_file": Path(
-            "data/processed/trigger-proxies/thresholds/"
-            "trigger_thresholds_rain_2017_2024.csv"
-        ),
-        "y_label": "Population-weighted monthly rainfall (mm)",
+        "threshold_files": [
+            Path(
+                "data/processed/trigger-proxies/thresholds/"
+                "trigger_thresholds_rain_monthly_max_5d_mm_pop_2007_2024.csv"
+            ),
+            Path(
+                "data/processed/trigger-proxies/thresholds/"
+                "trigger_thresholds_rain_monthly_max_3d_mm_pop_2007_2024.csv"
+            ),
+            Path(
+                "data/processed/trigger-proxies/thresholds/"
+                "trigger_thresholds_rain_monthly_total_mm_pop_2007_2024.csv"
+            ),
+        ],
+        "y_label": "Population-weighted rainfall index (mm)",
     },
+
     "tc": {
         "start_year": 2017,
         "end_year": 2024,
@@ -52,12 +64,15 @@ HAZARD_CONFIGS = {
             "data/processed/trigger-proxies/panels/"
             "trigger_panel_tc_2017_2024.csv"
         ),
-        "threshold_file": Path(
-            "data/processed/trigger-proxies/thresholds/"
-            "trigger_thresholds_tc_2017_2024.csv"
-        ),
+        "threshold_files": [
+            Path(
+                "data/processed/trigger-proxies/thresholds/"
+                "trigger_thresholds_tc_monthly_max_wind_kt_2017_2024.csv"
+            ),
+        ],
         "y_label": "Monthly max wind speed near country (kt)",
     },
+
     "earthquake": {
         "start_year": 2007,
         "end_year": 2024,
@@ -65,13 +80,23 @@ HAZARD_CONFIGS = {
             "data/processed/trigger-proxies/panels/"
             "trigger_panel_earthquake_2007_2024.csv"
         ),
-        "threshold_file": Path(
-            "data/processed/trigger-proxies/thresholds/"
-            "trigger_thresholds_earthquake_2007_2024.csv"
-        ),
+        "threshold_files": [
+            Path(
+                "data/processed/trigger-proxies/thresholds/"
+                "trigger_thresholds_earthquake_monthly_max_shake_proxy_2007_2024.csv"
+            ),
+        ],
         "y_label": "Monthly max earthquake shake proxy",
     },
 }
+
+
+# ============================================================
+# HELPERS
+# ============================================================
+
+def safe_name(x: str) -> str:
+    return str(x).replace("/", "_").replace(" ", "_")
 
 
 # ============================================================
@@ -90,18 +115,24 @@ def load_panel(path: Path) -> pd.DataFrame:
         "country",
         "plot_date",
         "policy_year",
-        "hazard_index",
         "has_payout",
         "payout_amount_usd",
     ]
+
     missing = [c for c in required if c not in df.columns]
     if missing:
         raise ValueError(f"Panel file missing columns: {missing}")
 
     df["plot_date"] = pd.to_datetime(df["plot_date"])
-    df["hazard_index"] = pd.to_numeric(df["hazard_index"], errors="coerce")
-    df["has_payout"] = pd.to_numeric(df["has_payout"], errors="coerce").fillna(0).astype(int)
-    df["payout_amount_usd"] = pd.to_numeric(df["payout_amount_usd"], errors="coerce").fillna(0.0)
+    df["has_payout"] = (
+        pd.to_numeric(df["has_payout"], errors="coerce")
+        .fillna(0)
+        .astype(int)
+    )
+    df["payout_amount_usd"] = (
+        pd.to_numeric(df["payout_amount_usd"], errors="coerce")
+        .fillna(0.0)
+    )
 
     return df.sort_values(["country", "plot_date"]).reset_index(drop=True)
 
@@ -114,6 +145,7 @@ def load_thresholds(path: Path) -> pd.DataFrame:
 
     required = [
         "hazard",
+        "index_name",
         "iso3",
         "country",
         "policy_year",
@@ -124,11 +156,15 @@ def load_thresholds(path: Path) -> pd.DataFrame:
         "sensitivity",
         "specificity",
     ]
+
     missing = [c for c in required if c not in df.columns]
     if missing:
         raise ValueError(f"Threshold file missing columns: {missing}")
 
-    df["optimal_threshold"] = pd.to_numeric(df["optimal_threshold"], errors="coerce")
+    df["optimal_threshold"] = pd.to_numeric(
+        df["optimal_threshold"],
+        errors="coerce",
+    )
 
     return df
 
@@ -173,14 +209,30 @@ def add_policy_year_shading(ax, panel_country: pd.DataFrame) -> None:
 # PLOTTING
 # ============================================================
 
-def plot_threshold_fit_country_hazard(
+def plot_threshold_fit_country_hazard_index(
     panel_country: pd.DataFrame,
     thresholds_country: pd.DataFrame,
     hazard: str,
+    index_name: str,
     config: dict,
 ) -> Path:
+    panel_country = panel_country.copy()
+    thresholds_country = thresholds_country.copy()
+
     iso3 = panel_country["iso3"].iloc[0]
     country = panel_country["country"].iloc[0]
+
+    if index_name not in panel_country.columns:
+        raise ValueError(
+            f"Index column '{index_name}' not found in panel for {country} ({iso3})."
+        )
+
+    panel_country["hazard_index"] = pd.to_numeric(
+        panel_country[index_name],
+        errors="coerce",
+    )
+
+    panel_country = panel_country.dropna(subset=["hazard_index"]).copy()
 
     fig, ax = plt.subplots(figsize=(12, 5.5))
 
@@ -188,7 +240,7 @@ def plot_threshold_fit_country_hazard(
         panel_country["plot_date"],
         panel_country["hazard_index"],
         linewidth=1.8,
-        label="Hazard proxy",
+        label=index_name,
     )
 
     payout_months = panel_country[panel_country["has_payout"] == 1].copy()
@@ -235,8 +287,8 @@ def plot_threshold_fit_country_hazard(
         )
 
     title = (
-        f"{country} ({iso3}) — {hazard.upper()} proxy vs payouts\n"
-        f"Threshold calibration by CCRIF policy year"
+        f"{country} ({iso3}) — {hazard.upper()} threshold fit\n"
+        f"Index: {index_name}"
     )
 
     ax.set_title(title)
@@ -248,8 +300,12 @@ def plot_threshold_fit_country_hazard(
     fig.autofmt_xdate()
     fig.tight_layout()
 
-    out_path = OUT_DIR / (
-        f"threshold_fit_{hazard}_{iso3}_{config['start_year']}_{config['end_year']}.png"
+    index_dir = OUT_DIR / hazard / safe_name(index_name)
+    index_dir.mkdir(parents=True, exist_ok=True)
+
+    out_path = index_dir / (
+        f"threshold_fit_{hazard}_{safe_name(index_name)}_"
+        f"{iso3}_{config['start_year']}_{config['end_year']}.png"
     )
 
     fig.savefig(out_path, dpi=300)
@@ -258,10 +314,13 @@ def plot_threshold_fit_country_hazard(
     return out_path
 
 
-def plot_all_for_hazard(hazard: str, config: dict) -> list[Path]:
-    panel = load_panel(config["panel_file"])
-    thresholds = load_thresholds(config["threshold_file"])
-
+def plot_all_for_hazard_index(
+    panel: pd.DataFrame,
+    thresholds: pd.DataFrame,
+    hazard: str,
+    index_name: str,
+    config: dict,
+) -> list[Path]:
     outputs = []
 
     countries = (
@@ -287,14 +346,54 @@ def plot_all_for_hazard(hazard: str, config: dict) -> list[Path]:
         if panel_country.empty:
             continue
 
-        out_path = plot_threshold_fit_country_hazard(
+        if thresholds_country.empty:
+            continue
+
+        out_path = plot_threshold_fit_country_hazard_index(
             panel_country=panel_country,
             thresholds_country=thresholds_country,
             hazard=hazard,
+            index_name=index_name,
             config=config,
         )
 
         outputs.append(out_path)
+
+    return outputs
+
+
+def plot_all_for_hazard(hazard: str, config: dict) -> list[Path]:
+    panel = load_panel(config["panel_file"])
+    outputs = []
+
+    for threshold_file in config["threshold_files"]:
+        thresholds = load_thresholds(threshold_file)
+
+        if thresholds.empty:
+            print(f"  Skipping empty threshold file: {threshold_file}")
+            continue
+
+        index_names = thresholds["index_name"].dropna().unique()
+
+        if len(index_names) != 1:
+            raise ValueError(
+                f"Expected one index_name in {threshold_file}, "
+                f"found: {index_names}"
+            )
+
+        index_name = index_names[0]
+
+        print(f"  Plotting index: {index_name}")
+
+        outputs_index = plot_all_for_hazard_index(
+            panel=panel,
+            thresholds=thresholds,
+            hazard=hazard,
+            index_name=index_name,
+            config=config,
+        )
+
+        outputs.extend(outputs_index)
 
     return outputs
 
@@ -308,9 +407,11 @@ def main():
 
     for hazard, config in HAZARD_CONFIGS.items():
         print(f"\nPlotting threshold-fit figures for hazard={hazard}")
+
         outputs = plot_all_for_hazard(hazard, config)
+
         all_outputs.extend(outputs)
-        print(f"  Saved {len(outputs)} figures")
+        print(f"  Saved {len(outputs)} figures for hazard={hazard}")
 
     print(f"\nSaved {len(all_outputs)} total figures to: {OUT_DIR}")
 
