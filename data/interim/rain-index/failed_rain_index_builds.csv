@@ -1,6 +1,2 @@
 iso3,country,error
-GTM,Guatemala,WorldPop raster not found: data/raw/worldpop/GTM/gtm_pop_2015_CN_1km_R2025A_UA_v1.tif
-HND,Honduras,WorldPop raster not found: data/raw/worldpop/HND/hnd_pop_2015_CN_1km_R2025A_UA_v1.tif
-NIC,Nicaragua,WorldPop raster not found: data/raw/worldpop/NIC/nic_pop_2015_CN_1km_R2025A_UA_v1.tif
-PAN,Panama,WorldPop raster not found: data/raw/worldpop/PAN/pan_pop_2015_CN_1km_R2025A_UA_v1.tif
 SXM,Sint Maarten,No CHIRPS cells selected for country

@@ -6,7 +6,7 @@ Updated for multiple candidate index columns per hazard.
 Inputs:
     data/processed/trigger-proxies/panels/
         trigger_panel_rain_2007_2024.csv
-        trigger_panel_tc_2017_2024.csv
+        trigger_panel_tc_2007_2024.csv
         trigger_panel_earthquake_2007_2024.csv
 
     data/processed/trigger-proxies/thresholds/
