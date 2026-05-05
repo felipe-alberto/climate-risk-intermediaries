@@ -3,7 +3,7 @@ Build tropical cyclone / wind exposure index for CCRIF countries.
 
 Inputs:
     data/raw/ibtracs/ibtracs_ALL_list_v04r01.csv
-    data/raw/natural-earth/ne_110m_admin_0_countries.zip
+    data/raw/natural-earth/ne_10m_admin_0_countries.zip
 
 Outputs:
     data/interim/tc-index/
@@ -49,12 +49,12 @@ COUNTRIES = {
     "TCA": "Turks and Caicos Islands",
 }
 
-START_YEAR = 2017
+START_YEAR = 2007
 END_YEAR = 2024
 HIT_BUFFER_KM = 50
 
 RAW_IBTRACS_FILE = Path("data/raw/ibtracs/ibtracs_ALL_list_v04r01.csv")
-NATURAL_EARTH_FILE = Path("data/raw/natural-earth/ne_110m_admin_0_countries.zip")
+NATURAL_EARTH_FILE = Path("data/raw/natural-earth/ne_10m_admin_0_countries.zip")
 
 OUT_DIR = Path("data/interim/tc-index")
 COUNTRY_OUT_DIR = OUT_DIR / "by_country"

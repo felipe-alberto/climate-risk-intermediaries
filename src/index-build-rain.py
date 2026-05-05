@@ -42,9 +42,13 @@ COUNTRIES = {
     "DMA": "Dominica",
     "DOM": "Dominican Republic",
     "GRD": "Grenada",
+    "GTM": "Guatemala",
+    "HND": "Honduras",
     "HTI": "Haiti",
     "JAM": "Jamaica",
     "MSR": "Montserrat",
+    "NIC": "Nicaragua",
+    "PAN": "Panama",
     "KNA": "Saint Kitts and Nevis",
     "LCA": "Saint Lucia",
     "VCT": "Saint Vincent and the Grenadines",
@@ -567,6 +571,7 @@ def build_country_year_index(
         iso3=iso3,
         country_name=country_name,
     )
+    monthly["population_weight_year"] = population_weight_year
 
     return monthly, weights
 

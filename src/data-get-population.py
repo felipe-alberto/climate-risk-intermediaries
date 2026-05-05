@@ -24,6 +24,10 @@ COUNTRIES = {
     "SXM": "Sint Maarten",
     "TTO": "Trinidad and Tobago",
     "TCA": "Turks and Caicos Islands",
+    "GTM": "Guatemala",
+    "HND": "Honduras",
+    "NIC": "Nicaragua",
+    "PAN": "Panama",
 }
 
 START_YEAR = 2007

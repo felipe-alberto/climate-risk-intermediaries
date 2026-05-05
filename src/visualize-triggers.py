@@ -58,16 +58,16 @@ HAZARD_CONFIGS = {
     },
 
     "tc": {
-        "start_year": 2017,
+        "start_year": 2007,
         "end_year": 2024,
         "panel_file": Path(
             "data/processed/trigger-proxies/panels/"
-            "trigger_panel_tc_2017_2024.csv"
+            "trigger_panel_tc_2007_2024.csv"
         ),
         "threshold_files": [
             Path(
                 "data/processed/trigger-proxies/thresholds/"
-                "trigger_thresholds_tc_monthly_max_wind_kt_2017_2024.csv"
+                "trigger_thresholds_tc_monthly_max_wind_kt_2007_2024.csv"
             ),
         ],
         "y_label": "Monthly max wind speed near country (kt)",

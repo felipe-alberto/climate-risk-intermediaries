@@ -52,11 +52,11 @@ HAZARD_CONFIGS = {
         ],
     },
     "tc": {
-        "start_year": 2017,
+        "start_year": 2007,
         "end_year": 2024,
         "panel_file": Path(
             "data/interim/tc-index/"
-            "tc_country_month_panel_all_countries_2017_2024.csv"
+            "tc_country_month_panel_all_countries_2007_2024.csv"
         ),
         "index_columns": ["monthly_max_wind_kt"],
     },
@@ -70,6 +70,8 @@ HAZARD_CONFIGS = {
         "index_columns": ["monthly_max_shake_proxy"],
     },
 }
+
+
 
 NEAR_BELOW_BANDWIDTH_PCTS = [0.05, 0.10]
 
