@@ -72,6 +72,12 @@ HAZARD_CONFIGS = {
 }
 
 
+COUNTRY_NAME_FIX = {
+    "Bahamas, The": "Bahamas",
+    "St. Lucia": "Saint Lucia",
+    "St. Kitts and Nevis": "Saint Kitts and Nevis",
+    "St. Vincent and the Grenadines": "Saint Vincent and the Grenadines",
+}
 
 NEAR_BELOW_BANDWIDTH_PCTS = [0.05, 0.10]
 
@@ -215,8 +221,8 @@ def load_hazard_panel(hazard: str, config: dict) -> pd.DataFrame:
 
 def load_payouts() -> pd.DataFrame:
     payouts = pd.read_csv(PAYOUT_FILE)
-
     payouts["country"] = payouts["Country"].astype(str).str.strip()
+    payouts["country"] = payouts["country"].replace(COUNTRY_NAME_FIX)
     payouts["amount_usd"] = clean_amount_usd(payouts["Amount (USD)"])
 
     payouts["Year"] = pd.to_numeric(payouts["Year"], errors="coerce")
