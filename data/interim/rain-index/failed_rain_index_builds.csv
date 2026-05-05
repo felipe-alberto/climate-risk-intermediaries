@@ -1,18 +1,2 @@
 iso3,country,error
-AIA,Anguilla,Country not found in Natural Earth: Anguilla (AIA). Check Natural Earth naming or add a manual override.
-ATG,Antigua and Barbuda,Country not found in Natural Earth: Antigua and Barbuda (ATG). Check Natural Earth naming or add a manual override.
-BHS,Bahamas,WorldPop raster not found: data/raw/worldpop/BHS/bhs_pop_2017_CN_1km_R2025A_UA_v1.tif
-BRB,Barbados,Country not found in Natural Earth: Barbados (BRB). Check Natural Earth naming or add a manual override.
-BMU,Bermuda,Country not found in Natural Earth: Bermuda (BMU). Check Natural Earth naming or add a manual override.
-VGB,British Virgin Islands,Country not found in Natural Earth: British Virgin Islands (VGB). Check Natural Earth naming or add a manual override.
-CYM,Cayman Islands,Country not found in Natural Earth: Cayman Islands (CYM). Check Natural Earth naming or add a manual override.
-DMA,Dominica,Country not found in Natural Earth: Dominica (DMA). Check Natural Earth naming or add a manual override.
-DOM,Dominican Republic,WorldPop raster not found: data/raw/worldpop/DOM/dom_pop_2017_CN_1km_R2025A_UA_v1.tif
-GRD,Grenada,Country not found in Natural Earth: Grenada (GRD). Check Natural Earth naming or add a manual override.
-HTI,Haiti,WorldPop raster not found: data/raw/worldpop/HTI/hti_pop_2017_CN_1km_R2025A_UA_v1.tif
-MSR,Montserrat,Country not found in Natural Earth: Montserrat (MSR). Check Natural Earth naming or add a manual override.
-KNA,Saint Kitts and Nevis,Country not found in Natural Earth: Saint Kitts and Nevis (KNA). Check Natural Earth naming or add a manual override.
-LCA,Saint Lucia,Country not found in Natural Earth: Saint Lucia (LCA). Check Natural Earth naming or add a manual override.
-VCT,Saint Vincent and the Grenadines,Country not found in Natural Earth: Saint Vincent and the Grenadines (VCT). Check Natural Earth naming or add a manual override.
-SXM,Sint Maarten,Country not found in Natural Earth: Sint Maarten (SXM). Check Natural Earth naming or add a manual override.
-TCA,Turks and Caicos Islands,Country not found in Natural Earth: Turks and Caicos Islands (TCA). Check Natural Earth naming or add a manual override.
+SXM,Sint Maarten,No CHIRPS cells selected for country

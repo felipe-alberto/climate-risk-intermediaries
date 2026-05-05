@@ -4,7 +4,7 @@ Build population-weighted CHIRPS rainfall index for CCRIF countries.
 Inputs:
     data/raw/chirps/
     data/raw/worldpop/
-    data/raw/natural-earth/ne_110m_admin_0_countries.zip
+    data/raw/natural-earth/ne_10m_admin_0_countries.zip
 
 Outputs:
     data/interim/rain-index/
@@ -53,18 +53,31 @@ COUNTRIES = {
     "TCA": "Turks and Caicos Islands",
 }
 
-START_YEAR = 2017
+START_YEAR = 2007
 END_YEAR = 2024
+MIN_WORLDPOP_YEAR = 2015
 
 CHIRPS_DIR = Path("data/raw/chirps")
 WORLDPOP_DIR = Path("data/raw/worldpop")
-NATURAL_EARTH_PATH = Path("data/raw/natural-earth/ne_110m_admin_0_countries.zip")
+NATURAL_EARTH_PATH = Path("data/raw/natural-earth/ne_10m_admin_0_countries.zip")
 
 OUT_DIR = Path("data/interim/rain-index")
 COUNTRY_OUT_DIR = OUT_DIR / "by_country"
 
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 COUNTRY_OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+RAIN_INDEX_COLUMNS = [
+    "monthly_total_mm_pop",
+    "monthly_mean_daily_mm_pop",
+    "monthly_max_1d_mm_pop",
+    "monthly_max_3d_mm_pop",
+    "monthly_max_5d_mm_pop",
+    "monthly_p95_daily_mm_pop",
+    "monthly_p99_daily_mm_pop",
+    "monthly_n_days_above_20mm_pop",
+    "monthly_n_days_above_50mm_pop",
+]
 
 
 # ============================================================
@@ -88,12 +101,13 @@ def weights_file_path(iso3: str, start_year: int, end_year: int) -> Path:
 
 def monthly_index_file_path(iso3: str, start_year: int, end_year: int) -> Path:
     return COUNTRY_OUT_DIR / (
-        f"chirps_monthly_metrics_popweighted_{iso3}_{start_year}_{end_year}.csv"
+        f"chirps_monthly_rain_indices_popweighted_{iso3}_{start_year}_{end_year}.csv"
     )
+
 
 def all_countries_index_file_path(start_year: int, end_year: int) -> Path:
     return OUT_DIR / (
-        f"chirps_monthly_metrics_popweighted_all_countries_"
+        f"chirps_monthly_rain_indices_popweighted_all_countries_"
         f"{start_year}_{end_year}.csv"
     )
 
@@ -372,6 +386,7 @@ def build_population_weights_for_year(
         pop_da=pop_da,
     )
 
+
     return weights
 
 
@@ -440,16 +455,53 @@ def aggregate_daily_to_monthly(
     iso3: str,
     country_name: str,
 ) -> pd.DataFrame:
+    """
+    Aggregate daily population-weighted rainfall into several
+    candidate monthly rainfall indices.
+
+    Notes:
+        - Rolling 3-day and 5-day totals are computed over the daily
+          series before monthly aggregation.
+        - This allows storm windows to cross month boundaries, which is
+          often desirable for disaster exposure measurement.
+    """
     daily = daily.copy()
 
     daily["time"] = pd.to_datetime(daily["time"])
+    daily = daily.sort_values("time").reset_index(drop=True)
+
+    rain_col = "pop_weighted_precip_mm"
+
+    daily["rolling_3d_mm_pop"] = (
+        daily[rain_col]
+        .rolling(window=3, min_periods=1)
+        .sum()
+    )
+
+    daily["rolling_5d_mm_pop"] = (
+        daily[rain_col]
+        .rolling(window=5, min_periods=1)
+        .sum()
+    )
+
     daily["year"] = daily["time"].dt.year
     daily["month"] = daily["time"].dt.month
     daily["year_month"] = daily["time"].dt.to_period("M").astype(str)
 
     monthly = (
         daily.groupby(["year", "month", "year_month"], as_index=False)
-        .agg(monthly_total_mm_pop=("pop_weighted_precip_mm", "sum"))
+        .agg(
+            monthly_total_mm_pop=(rain_col, "sum"),
+            monthly_mean_daily_mm_pop=(rain_col, "mean"),
+            monthly_max_1d_mm_pop=(rain_col, "max"),
+            monthly_max_3d_mm_pop=("rolling_3d_mm_pop", "max"),
+            monthly_max_5d_mm_pop=("rolling_5d_mm_pop", "max"),
+            monthly_p95_daily_mm_pop=(rain_col, lambda x: x.quantile(0.95)),
+            monthly_p99_daily_mm_pop=(rain_col, lambda x: x.quantile(0.99)),
+            monthly_n_days_above_20mm_pop=(rain_col, lambda x: int((x >= 20).sum())),
+            monthly_n_days_above_50mm_pop=(rain_col, lambda x: int((x >= 50).sum())),
+            n_days_observed=(rain_col, "count"),
+        )
         .sort_values(["year", "month"])
         .reset_index(drop=True)
     )
@@ -466,10 +518,18 @@ def aggregate_daily_to_monthly(
         "year_month",
         "date",
         "monthly_total_mm_pop",
+        "monthly_mean_daily_mm_pop",
+        "monthly_max_1d_mm_pop",
+        "monthly_max_3d_mm_pop",
+        "monthly_max_5d_mm_pop",
+        "monthly_p95_daily_mm_pop",
+        "monthly_p99_daily_mm_pop",
+        "monthly_n_days_above_20mm_pop",
+        "monthly_n_days_above_50mm_pop",
+        "n_days_observed",
     ]
 
     return monthly[ordered_cols]
-
 
 def build_country_year_index(
     iso3: str,
@@ -481,7 +541,8 @@ def build_country_year_index(
     da_sub = subset_chirps_to_country(da, country_gdf, pad=1.0)
     country_mask = build_country_mask(da_sub, country_gdf)
 
-    pop_da = load_worldpop_raster(iso3, year)
+    population_weight_year = max(year, MIN_WORLDPOP_YEAR)
+    pop_da = load_worldpop_raster(iso3, population_weight_year)
 
     weights = build_population_weights_for_year(
         iso3=iso3,
@@ -491,6 +552,8 @@ def build_country_year_index(
         country_mask=country_mask,
         pop_da=pop_da,
     )
+    weights["rainfall_year"] = year
+    weights["population_weight_year"] = population_weight_year
 
     daily = build_daily_popweighted_rainfall(
         da_sub=da_sub,

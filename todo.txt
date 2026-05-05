@@ -1,4 +1,25 @@
 
+Notes:
+
+- Rain Pipeline
+- - Currently using 2017 - 2024. Need to extend to include all payouts since 2007. 
+- - Natural Earth Failures: Bermuda, British Virgin Islands, Cayman Islands, Dominica, Dominican Republic, Grenada, Montserrat, Saint Kitts and Neis, Saint Lucia, Sint Marteen.
+- - Currently using Natural Earth 110m, might be too coarse for small islands.
+
+Paper Draft:
+- We study parametric insurance pools. In particular, are they too small? Are they useful?  
+- Empirical Setting: CCRIF
+- - Rain: CHIRPS, WorldPop (Exposure-Weighted Rainfall), Natural Earth.
+- - Index Set: Monthly Total, Maximum Daily, Multi-Day Accumulation (3, 5), Quantiles, Frequency. 
+- We optimally solve a binary classification problem for payout events using a threshold rule. 
+- - A joint classification and threshold estimation problem under measurement error. 
+- - Or a "supervised learning problem" with a "structural interpretation"? 
+- We use our optimal classification to build a Fuzzy Regression Discontinuity Design. 
+    - - Local Bandwidth Selection (LBS)
+- We find [nothing yet]
+
+ToDo's:
+
 - Complete data on payout benchmark against fiscal spending.
 - Complete data on payout benchmark against total disasters.
 - Identify the number of "events" in our sample (payout events [union] events above and slightly below estimated threshold )
