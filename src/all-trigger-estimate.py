@@ -290,16 +290,96 @@ def build_hazard_payout_panel(
 # THRESHOLD EVALUATION
 # ============================================================
 
+NEAR_BANDWIDTH_PCTS = [0.05, 0.10]
+
+
+def add_threshold_flags(
+    g: pd.DataFrame,
+    threshold: float,
+    bandwidth_pcts: list[float] = NEAR_BANDWIDTH_PCTS,
+) -> pd.DataFrame:
+    """
+    Add global and near-threshold classification flags.
+
+    Definitions:
+        predicted = 1 if hazard_index >= threshold
+        actual    = 1 if has_payout == 1
+
+    Confusion matrix:
+        TP: above threshold, payout
+        FP: above threshold, no payout
+        FN: below threshold, payout
+        TN: below threshold, no payout
+
+    Near-threshold windows:
+        near_below_Xpct:
+            index in [(1-X)*threshold, threshold)
+
+        near_above_Xpct:
+            index in [threshold, (1+X)*threshold]
+
+    These are useful RDD diagnostics because they isolate observations
+    close to the estimated cutoff.
+    """
+    g = g.copy()
+
+    g["above_threshold"] = g["hazard_index"] >= threshold
+    g["below_threshold"] = g["hazard_index"] < threshold
+
+    g["tp"] = (g["above_threshold"] & (g["has_payout"] == 1)).astype(int)
+    g["fp"] = (g["above_threshold"] & (g["has_payout"] == 0)).astype(int)
+    g["fn"] = (g["below_threshold"] & (g["has_payout"] == 1)).astype(int)
+    g["tn"] = (g["below_threshold"] & (g["has_payout"] == 0)).astype(int)
+
+    for bw in bandwidth_pcts:
+        label = int(round(100 * bw))
+
+        lower = threshold * (1 - bw)
+        upper = threshold * (1 + bw)
+
+        g[f"near_below_{label}pct"] = (
+            (g["hazard_index"] >= lower)
+            & (g["hazard_index"] < threshold)
+        ).astype(int)
+
+        g[f"near_above_{label}pct"] = (
+            (g["hazard_index"] >= threshold)
+            & (g["hazard_index"] <= upper)
+        ).astype(int)
+
+        # Local confusion buckets
+        g[f"near_tn_below_{label}pct"] = (
+            (g[f"near_below_{label}pct"] == 1)
+            & (g["tn"] == 1)
+        ).astype(int)
+
+        g[f"near_fn_below_{label}pct"] = (
+            (g[f"near_below_{label}pct"] == 1)
+            & (g["fn"] == 1)
+        ).astype(int)
+
+        g[f"near_tp_above_{label}pct"] = (
+            (g[f"near_above_{label}pct"] == 1)
+            & (g["tp"] == 1)
+        ).astype(int)
+
+        g[f"near_fp_above_{label}pct"] = (
+            (g[f"near_above_{label}pct"] == 1)
+            & (g["fp"] == 1)
+        ).astype(int)
+
+    return g
+
+
 def score_threshold(g: pd.DataFrame, threshold: float) -> dict:
-    predicted = (g["hazard_index"] >= threshold).astype(int)
-    actual = g["has_payout"].astype(int)
+    g_scored = add_threshold_flags(g, threshold)
 
-    tp = int(((predicted == 1) & (actual == 1)).sum())
-    tn = int(((predicted == 0) & (actual == 0)).sum())
-    fp = int(((predicted == 1) & (actual == 0)).sum())
-    fn = int(((predicted == 0) & (actual == 1)).sum())
+    tp = int(g_scored["tp"].sum())
+    fp = int(g_scored["fp"].sum())
+    fn = int(g_scored["fn"].sum())
+    tn = int(g_scored["tn"].sum())
 
-    n = len(g)
+    n = len(g_scored)
 
     precision = tp / (tp + fp) if (tp + fp) > 0 else np.nan
     sensitivity = tp / (tp + fn) if (tp + fn) > 0 else np.nan
@@ -322,10 +402,10 @@ def score_threshold(g: pd.DataFrame, threshold: float) -> dict:
     return {
         "threshold": threshold,
         "n_months": n,
-        "true_positives": tp,
-        "true_negatives": tn,
-        "false_positives": fp,
-        "false_negatives": fn,
+        "tp": tp,
+        "tn": tn,
+        "fp": fp,
+        "fn": fn,
         "correct_total": tp + tn,
         "incorrect_total": fp + fn,
         "accuracy": (tp + tn) / n if n > 0 else np.nan,
@@ -339,7 +419,7 @@ def score_threshold(g: pd.DataFrame, threshold: float) -> dict:
 
 
 def empty_threshold_result(base: dict) -> dict:
-    return {
+    out = {
         **base,
         "optimal_threshold": np.nan,
         "accuracy": np.nan,
@@ -349,11 +429,86 @@ def empty_threshold_result(base: dict) -> dict:
         "specificity": np.nan,
         "f1": np.nan,
         "net_score": np.nan,
-        "true_positives": np.nan,
-        "true_negatives": np.nan,
-        "false_positives": np.nan,
-        "false_negatives": np.nan,
+        "tp": np.nan,
+        "tn": np.nan,
+        "fp": np.nan,
+        "fn": np.nan,
     }
+
+    for bw in NEAR_BANDWIDTH_PCTS:
+        label = int(round(100 * bw))
+        out.update({
+            f"near_below_{label}pct_n": np.nan,
+            f"near_above_{label}pct_n": np.nan,
+            f"near_tn_below_{label}pct": np.nan,
+            f"near_fn_below_{label}pct": np.nan,
+            f"near_tp_above_{label}pct": np.nan,
+            f"near_fp_above_{label}pct": np.nan,
+            f"local_below_payout_rate_{label}pct": np.nan,
+            f"local_above_payout_rate_{label}pct": np.nan,
+            f"local_first_stage_{label}pct": np.nan,
+        })
+
+    return out
+
+
+def summarize_near_threshold_counts(
+    g: pd.DataFrame,
+    threshold: float,
+    bandwidth_pcts: list[float] = NEAR_BANDWIDTH_PCTS,
+) -> dict:
+    """
+    Produce near-cutoff diagnostics for RDD feasibility.
+
+    local_first_stage_Xpct is:
+        P(payout | near above cutoff) - P(payout | near below cutoff)
+    """
+    g_scored = add_threshold_flags(g, threshold, bandwidth_pcts)
+
+    out = {}
+
+    for bw in bandwidth_pcts:
+        label = int(round(100 * bw))
+
+        near_below_n = int(g_scored[f"near_below_{label}pct"].sum())
+        near_above_n = int(g_scored[f"near_above_{label}pct"].sum())
+
+        near_tn = int(g_scored[f"near_tn_below_{label}pct"].sum())
+        near_fn = int(g_scored[f"near_fn_below_{label}pct"].sum())
+        near_tp = int(g_scored[f"near_tp_above_{label}pct"].sum())
+        near_fp = int(g_scored[f"near_fp_above_{label}pct"].sum())
+
+        below_rate = (
+            near_fn / near_below_n
+            if near_below_n > 0
+            else np.nan
+        )
+
+        above_rate = (
+            near_tp / near_above_n
+            if near_above_n > 0
+            else np.nan
+        )
+
+        local_first_stage = (
+            above_rate - below_rate
+            if pd.notna(above_rate) and pd.notna(below_rate)
+            else np.nan
+        )
+
+        out.update({
+            f"near_below_{label}pct_n": near_below_n,
+            f"near_above_{label}pct_n": near_above_n,
+            f"near_tn_below_{label}pct": near_tn,
+            f"near_fn_below_{label}pct": near_fn,
+            f"near_tp_above_{label}pct": near_tp,
+            f"near_fp_above_{label}pct": near_fp,
+            f"local_below_payout_rate_{label}pct": below_rate,
+            f"local_above_payout_rate_{label}pct": above_rate,
+            f"local_first_stage_{label}pct": local_first_stage,
+        })
+
+    return out
 
 
 def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
@@ -392,8 +547,8 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
             by=[
                 "balanced_accuracy",
                 "accuracy",
-                "false_negatives",
-                "false_positives",
+                "fn",
+                "fp",
                 "threshold",
             ],
             ascending=[False, False, True, True, True],
@@ -401,9 +556,12 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
         .iloc[0]
     )
 
+    threshold = float(best["threshold"])
+    near_counts = summarize_near_threshold_counts(g, threshold)
+
     return {
         **base,
-        "optimal_threshold": best["threshold"],
+        "optimal_threshold": threshold,
         "accuracy": best["accuracy"],
         "balanced_accuracy": best["balanced_accuracy"],
         "precision": best["precision"],
@@ -411,10 +569,21 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
         "specificity": best["specificity"],
         "f1": best["f1"],
         "net_score": best["net_score"],
-        "true_positives": best["true_positives"],
-        "true_negatives": best["true_negatives"],
-        "false_positives": best["false_positives"],
-        "false_negatives": best["false_negatives"],
+
+        # canonical confusion matrix
+        "tp": int(best["tp"]),
+        "tn": int(best["tn"]),
+        "fp": int(best["fp"]),
+        "fn": int(best["fn"]),
+
+        # readable aliases
+        "above_threshold_with_payout": int(best["tp"]),
+        "above_threshold_no_payout": int(best["fp"]),
+        "below_threshold_with_payout": int(best["fn"]),
+        "below_threshold_no_payout": int(best["tn"]),
+
+        # RDD-relevant near-cutoff diagnostics
+        **near_counts,
     }
 
 
@@ -427,7 +596,6 @@ def estimate_thresholds(panel: pd.DataFrame) -> pd.DataFrame:
         results.append(find_optimal_threshold_for_group(g))
 
     return pd.DataFrame(results)
-
 
 # ============================================================
 # SUMMARY TABLES

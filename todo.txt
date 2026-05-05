@@ -1,4 +1,8 @@
 
-- Benchmark payouts against fiscal spending
-- Are parametric insurance payouts complements or substitutes to other funding sources? 
+- Complete data on payout benchmark against fiscal spending.
+- Complete data on payout benchmark against total disasters.
+- Identify the number of "events" in our sample (payout events [union] events above and slightly below estimated threshold )
+    - Include all years in the threshold calibration.
+    - Include all countries in the threshold calibration.
+- Build data on alternative funding sources for fast liquidity spending. 
 - RQ: Are countries efficiently insured? 
