@@ -1,5 +1,9 @@
 iso3,country,hazard,index_name,n_policy_years_with_payouts,total_payout_months,mean_accuracy,mean_balanced_accuracy,mean_precision,mean_sensitivity,mean_specificity,mean_f1,total_tp,total_fp,total_fn,total_tn,total_rdd_treated,total_rdd_untreated_5pct,total_rdd_untreated_10pct,total_near_tn_below_5pct,total_near_tn_below_10pct,total_near_fn_below_5pct,total_near_fn_below_10pct
+VGB,British Virgin Islands,earthquake,monthly_max_shake_proxy,1,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,11.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+DMA,Dominica,earthquake,monthly_max_shake_proxy,1,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,11.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
 HTI,Haiti,earthquake,monthly_max_shake_proxy,2,2,1.0,1.0,1.0,1.0,1.0,1.0,2.0,0.0,0.0,22.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0
+NIC,Nicaragua,earthquake,monthly_max_shake_proxy,1,1,0.9166666666666666,0.9545454545454546,0.5,1.0,0.9090909090909091,0.6666666666666666,1.0,1.0,0.0,10.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+LCA,Saint Lucia,earthquake,monthly_max_shake_proxy,1,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,11.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
 GTM,Guatemala,rain,monthly_max_3d_mm_pop,2,2,0.9583333333333333,0.9772727272727273,0.75,1.0,0.9545454545454546,0.8333333333333333,2.0,1.0,0.0,16.0,2.0,1.0,1.0,0.0,0.0,0.0,0.0
 GTM,Guatemala,rain,monthly_max_5d_mm_pop,2,2,0.9583333333333333,0.9772727272727273,0.75,1.0,0.9545454545454546,0.8333333333333333,2.0,1.0,0.0,16.0,2.0,1.0,1.0,0.0,0.0,0.0,0.0
 GTM,Guatemala,rain,monthly_p95_daily_mm_pop,2,2,0.9583333333333333,0.9772727272727273,0.75,1.0,0.9545454545454546,0.8333333333333333,2.0,1.0,0.0,16.0,2.0,1.0,2.0,0.0,1.0,0.0,0.0

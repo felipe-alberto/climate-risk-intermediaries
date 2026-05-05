@@ -1,0 +1,3 @@
+id,time,year,month,year_month,mag,place,country,iso_a3,dist_km,shake_proxy
+usp000j06z,2011-04-18 15:38:03.890000+00:00,2011,4,2011-04,4.6,"78 km WNW of Hamilton, Bermuda",Bermuda,BMU,82.43046918447679,132.13093568690192
+usp000j8w6,2011-10-03 22:36:32.390000+00:00,2011,10,2011-10,4.5,"128 km SSW of Hamilton, Bermuda",Bermuda,BMU,144.66257656800298,86.27186891383319

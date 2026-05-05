@@ -1,7 +1,7 @@
 import pandas as pd
 
 PAYOUT_FILE = "data/raw/climate-risk-pools/payouts.csv"
-PANEL_FILE = "data/processed/trigger-proxies/panels/trigger_panel_tc_2007_2024.csv"
+PANEL_FILE = "data/processed/trigger-proxies/panels/trigger_panel_earthquake_2007_2024.csv"
 
 COUNTRY_NAME_FIX = {
     "Bahamas, The": "Bahamas",
@@ -45,14 +45,14 @@ payouts["plot_date"] = pd.to_datetime(
 
 payouts["hazard"] = payouts["Policy"].apply(map_policy_to_hazard)
 
-raw_tc = payouts[
-    (payouts["hazard"] == "tc")
+raw_eq = payouts[
+    (payouts["hazard"] == "earthquake")
     & (payouts["plot_date"] >= "2007-01-01")
     & (payouts["plot_date"] <= "2024-12-31")
 ].copy()
 
-raw_tc_months = (
-    raw_tc.groupby(["country", "plot_date"], as_index=False)
+raw_eq_months = (
+    raw_eq.groupby(["country", "plot_date"], as_index=False)
     .size()
     .rename(columns={"size": "raw_payout_rows"})
 )
@@ -60,15 +60,15 @@ raw_tc_months = (
 panel = pd.read_csv(PANEL_FILE)
 panel["plot_date"] = pd.to_datetime(panel["plot_date"])
 
-panel_tc_months = (
+panel_eq_months = (
     panel[panel["has_payout"] == 1]
     .groupby(["country", "plot_date"], as_index=False)
     .size()
     .rename(columns={"size": "panel_rows"})
 )
 
-compare = raw_tc_months.merge(
-    panel_tc_months,
+compare = raw_eq_months.merge(
+    panel_eq_months,
     on=["country", "plot_date"],
     how="left",
     indicator=True,
@@ -76,15 +76,15 @@ compare = raw_tc_months.merge(
 
 missing = compare[compare["_merge"] == "left_only"].copy()
 
-print("\n=== RAW TC PAYOUT MONTHS, 2007–2024 ===")
-print(len(raw_tc_months))
-print(raw_tc_months.sort_values(["plot_date", "country"]).to_string(index=False))
+print("\n=== RAW EQ PAYOUT MONTHS, 2007–2024 ===")
+print(len(raw_eq_months))
+print(raw_eq_months.sort_values(["plot_date", "country"]).to_string(index=False))
 
-print("\n=== PANEL MATCHED TC PAYOUT MONTHS ===")
-print(len(panel_tc_months))
-print(panel_tc_months.sort_values(["plot_date", "country"]).to_string(index=False))
+print("\n=== PANEL MATCHED EQ PAYOUT MONTHS ===")
+print(len(panel_eq_months))
+print(panel_eq_months.sort_values(["plot_date", "country"]).to_string(index=False))
 
-print("\n=== MISSING FROM TC PANEL ===")
+print("\n=== MISSING FROM EQ PANEL ===")
 if missing.empty:
     print("None.")
 else:
@@ -94,5 +94,5 @@ else:
         .to_string(index=False)
     )
 
-print("\n=== TC PANEL COUNTRIES ===")
+print("\n=== EQ PANEL COUNTRIES ===")
 print(sorted(panel["country"].unique()))

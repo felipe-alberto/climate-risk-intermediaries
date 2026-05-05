@@ -47,6 +47,10 @@ COUNTRIES = {
     "SXM": "Sint Maarten",
     "TTO": "Trinidad and Tobago",
     "TCA": "Turks and Caicos Islands",
+    "DMA": "Dominica",
+    "LCA": "Saint Lucia",
+    "NIC": "Nicaragua",
+    "VGB": "British Virgin Islands",
 }
 
 START_YEAR = 2007
@@ -54,7 +58,7 @@ END_YEAR = 2024
 MAX_DIST_KM = 500
 
 RAW_EQ_FILE = Path("data/raw/usgs-earthquakes/usgs_earthquakes_2007_2024.csv")
-NATURAL_EARTH_FILE = Path("data/raw/natural-earth/ne_110m_admin_0_countries.zip")
+NATURAL_EARTH_FILE = Path("data/raw/natural-earth/ne_10m_admin_0_countries.zip")
 
 OUT_DIR = Path("data/interim/earthquake-index")
 COUNTRY_OUT_DIR = OUT_DIR / "by_country"
