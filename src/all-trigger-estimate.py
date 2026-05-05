@@ -1,16 +1,18 @@
 """
 Evaluate threshold fit for disaster-risk-pool payout proxies.
 
+Now supports multiple candidate index columns per hazard.
+
 Outputs:
     data/processed/trigger-proxies/
         panels/
             trigger_panel_<hazard>_<start>_<end>.csv
 
         thresholds/
-            trigger_thresholds_<hazard>_<start>_<end>.csv
+            trigger_thresholds_<hazard>_<index_name>_<start>_<end>.csv
 
         trigger_thresholds_all_hazards.csv
-        trigger_summary_country_hazard.csv
+        trigger_summary_country_hazard_index.csv
 """
 
 from pathlib import Path
@@ -34,14 +36,20 @@ THRESHOLD_OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 HAZARD_CONFIGS = {
     "rain": {
-        "start_year": 2017,
+        "start_year": 2007,
         "end_year": 2024,
         "panel_file": Path(
             "data/interim/rain-index/"
-            "chirps_monthly_metrics_popweighted_all_countries_2017_2024.csv"
+            "chirps_monthly_rain_indices_popweighted_all_countries_2007_2024.csv"
         ),
-        "index_column": "monthly_total_mm_pop",
-        "payout_keywords": ["rain", "rainfall", "excess rainfall", "xsr"],
+        "index_columns": [
+            "monthly_total_mm_pop",
+            "monthly_max_1d_mm_pop",
+            "monthly_max_3d_mm_pop",
+            "monthly_max_5d_mm_pop",
+            "monthly_p95_daily_mm_pop",
+            "monthly_p99_daily_mm_pop",
+        ],
     },
     "tc": {
         "start_year": 2017,
@@ -50,8 +58,7 @@ HAZARD_CONFIGS = {
             "data/interim/tc-index/"
             "tc_country_month_panel_all_countries_2017_2024.csv"
         ),
-        "index_column": "monthly_max_wind_kt",
-        "payout_keywords": ["tropical cyclone", "cyclone", "hurricane", "wind", "tc"],
+        "index_columns": ["monthly_max_wind_kt"],
     },
     "earthquake": {
         "start_year": 2007,
@@ -60,10 +67,11 @@ HAZARD_CONFIGS = {
             "data/interim/earthquake-index/"
             "eq_country_month_panel_all_countries_2007_2024.csv"
         ),
-        "index_column": "monthly_max_shake_proxy",
-        "payout_keywords": ["earthquake", "eq"],
+        "index_columns": ["monthly_max_shake_proxy"],
     },
 }
+
+NEAR_BELOW_BANDWIDTH_PCTS = [0.05, 0.10]
 
 
 # ============================================================
@@ -85,6 +93,7 @@ def map_policy_to_hazard(policy: str) -> str:
 
     return "other"
 
+
 def clean_amount_usd(series: pd.Series) -> pd.Series:
     return pd.to_numeric(
         series.astype(str)
@@ -94,6 +103,7 @@ def clean_amount_usd(series: pd.Series) -> pd.Series:
         .replace({"": pd.NA, "nan": pd.NA}),
         errors="coerce",
     )
+
 
 def get_payouts_for_hazard(payouts: pd.DataFrame, hazard: str) -> pd.DataFrame:
     return payouts[payouts["hazard"] == hazard].copy()
@@ -116,22 +126,14 @@ def get_policy_year_label(date: pd.Timestamp) -> str:
     return f"{start_year}/{end_year_short}"
 
 
-def normalize_text(x) -> str:
-    if pd.isna(x):
-        return ""
-    return str(x).strip().lower()
-
-
 def output_panel_path(hazard: str, config: dict) -> Path:
     return PANEL_OUT_DIR / (
         f"trigger_panel_{hazard}_{config['start_year']}_{config['end_year']}.csv"
     )
 
 
-def output_threshold_path(hazard: str, config: dict) -> Path:
-    return THRESHOLD_OUT_DIR / (
-        f"trigger_thresholds_{hazard}_{config['start_year']}_{config['end_year']}.csv"
-    )
+def safe_index_name(index_col: str) -> str:
+    return index_col.replace("/", "_").replace(" ", "_")
 
 
 # ============================================================
@@ -140,14 +142,14 @@ def output_threshold_path(hazard: str, config: dict) -> Path:
 
 def load_hazard_panel(hazard: str, config: dict) -> pd.DataFrame:
     path = config["panel_file"]
-    index_col = config["index_column"]
+    index_cols = config["index_columns"]
 
     if not path.exists():
         raise FileNotFoundError(f"{hazard} panel file not found: {path}")
 
     df = pd.read_csv(path)
 
-    required = ["iso3", "country", "year", "month", index_col]
+    required = ["iso3", "country", "year", "month"] + index_cols
     missing = [c for c in required if c not in df.columns]
     if missing:
         raise ValueError(f"{hazard} panel missing columns: {missing}")
@@ -171,7 +173,9 @@ def load_hazard_panel(hazard: str, config: dict) -> pd.DataFrame:
 
     df["policy_year"] = df["plot_date"].apply(get_policy_year_label)
     df["hazard"] = hazard
-    df["hazard_index"] = pd.to_numeric(df[index_col], errors="coerce")
+
+    for col in index_cols:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
 
     keep_cols = [
         "hazard",
@@ -181,17 +185,18 @@ def load_hazard_panel(hazard: str, config: dict) -> pd.DataFrame:
         "month",
         "plot_date",
         "policy_year",
-        "hazard_index",
-    ]
+    ] + index_cols
 
     optional_cols = [
-        "monthly_total_mm_pop",
-        "monthly_max_wind_kt",
+        "population_weight_year",
+        "n_days_observed",
+        "monthly_mean_daily_mm_pop",
+        "monthly_n_days_above_20mm_pop",
+        "monthly_n_days_above_50mm_pop",
         "monthly_max_wind_mps",
         "n_storms",
         "storm_names",
         "storm_ids",
-        "monthly_max_shake_proxy",
         "monthly_sum_shake_proxy",
         "monthly_max_mag_nearby",
         "n_eq_nearby",
@@ -199,7 +204,11 @@ def load_hazard_panel(hazard: str, config: dict) -> pd.DataFrame:
 
     keep_cols += [c for c in optional_cols if c in df.columns and c not in keep_cols]
 
-    return df[keep_cols].sort_values(["country", "plot_date"]).reset_index(drop=True)
+    return (
+        df[keep_cols]
+        .sort_values(["country", "plot_date"])
+        .reset_index(drop=True)
+    )
 
 
 def load_payouts() -> pd.DataFrame:
@@ -224,18 +233,12 @@ def load_payouts() -> pd.DataFrame:
     payouts["plot_date"] = payouts["date"].dt.to_period("M").dt.to_timestamp()
     payouts["policy_year"] = payouts["plot_date"].apply(get_policy_year_label)
 
-    # Classification based on Policy
-    payouts["policy_clean"] = payouts["Policy"].astype(str).str.strip().str.upper()
-
-    # Classification based on insured policy/product, not event type
     payouts["policy_clean"] = payouts["Policy"].astype(str).str.strip().str.upper()
     payouts["hazard"] = payouts["policy_clean"].apply(map_policy_to_hazard)
 
-    # Keep only core hazards used in trigger-proxy evaluation
     payouts = payouts[payouts["hazard"].isin(["rain", "tc", "earthquake"])].copy()
 
     return payouts.sort_values(["country", "plot_date"]).reset_index(drop=True)
-
 
 
 def restrict_payouts_to_hazard_window(
@@ -286,12 +289,16 @@ def build_hazard_payout_panel(
     return panel.sort_values(["country", "plot_date"]).reset_index(drop=True)
 
 
+def prepare_panel_for_index(panel: pd.DataFrame, index_col: str) -> pd.DataFrame:
+    out = panel.copy()
+    out["index_name"] = index_col
+    out["hazard_index"] = pd.to_numeric(out[index_col], errors="coerce")
+    return out.dropna(subset=["hazard_index"]).copy()
+
+
 # ============================================================
 # THRESHOLD EVALUATION
 # ============================================================
-
-NEAR_BELOW_BANDWIDTH_PCTS = [0.05, 0.10]
-
 
 def add_threshold_flags(
     g: pd.DataFrame,
@@ -299,8 +306,6 @@ def add_threshold_flags(
     bandwidth_pcts: list[float] = NEAR_BELOW_BANDWIDTH_PCTS,
 ) -> pd.DataFrame:
     """
-    Add classification and below-threshold near-control flags.
-
     Canonical classification:
         TP: index >= threshold and payout
         FP: index >= threshold and no payout
@@ -308,38 +313,18 @@ def add_threshold_flags(
         TN: index <  threshold and no payout
 
     RDD logic:
-        - All FP months are useful untreated high-index months:
-              index >= threshold, no payout.
-
-        - TN months are useful only if they are close below the threshold:
-              index in [(1 - bw) * threshold, threshold), no payout.
-
-    Therefore, the bandwidth is applied only below the threshold.
+        - All FP months are useful untreated high-index months.
+        - TN months are useful only if close below the threshold.
     """
     g = g.copy()
 
     g["above_threshold"] = g["hazard_index"] >= threshold
     g["below_threshold"] = g["hazard_index"] < threshold
 
-    g["tp"] = (
-        g["above_threshold"]
-        & (g["has_payout"] == 1)
-    ).astype(int)
-
-    g["fp"] = (
-        g["above_threshold"]
-        & (g["has_payout"] == 0)
-    ).astype(int)
-
-    g["fn"] = (
-        g["below_threshold"]
-        & (g["has_payout"] == 1)
-    ).astype(int)
-
-    g["tn"] = (
-        g["below_threshold"]
-        & (g["has_payout"] == 0)
-    ).astype(int)
+    g["tp"] = (g["above_threshold"] & (g["has_payout"] == 1)).astype(int)
+    g["fp"] = (g["above_threshold"] & (g["has_payout"] == 0)).astype(int)
+    g["fn"] = (g["below_threshold"] & (g["has_payout"] == 1)).astype(int)
+    g["tn"] = (g["below_threshold"] & (g["has_payout"] == 0)).astype(int)
 
     for bw in bandwidth_pcts:
         label = int(round(100 * bw))
@@ -370,7 +355,6 @@ def score_threshold(g: pd.DataFrame, threshold: float) -> dict:
     fp = int(g_scored["fp"].sum())
     fn = int(g_scored["fn"].sum())
     tn = int(g_scored["tn"].sum())
-
     n = len(g_scored)
 
     precision = tp / (tp + fp) if (tp + fp) > 0 else np.nan
@@ -415,17 +399,6 @@ def summarize_below_threshold_near_controls(
     threshold: float,
     bandwidth_pcts: list[float] = NEAR_BELOW_BANDWIDTH_PCTS,
 ) -> dict:
-    """
-    Summarize below-threshold near-control diagnostics.
-
-    near_tn_below_Xpct:
-        close-below-threshold, no payout.
-        These are your most useful untreated near-miss months.
-
-    near_fn_below_Xpct:
-        close-below-threshold, payout.
-        These are below-threshold treated months close to the cutoff.
-    """
     g_scored = add_threshold_flags(g, threshold, bandwidth_pcts)
 
     out = {}
@@ -493,6 +466,7 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
     g = g.sort_values("plot_date").copy()
 
     hazard = g["hazard"].iloc[0]
+    index_name = g["index_name"].iloc[0]
     iso3 = g["iso3"].iloc[0]
     country = g["country"].iloc[0]
     policy_year = g["policy_year"].iloc[0]
@@ -501,6 +475,7 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
 
     base = {
         "hazard": hazard,
+        "index_name": index_name,
         "iso3": iso3,
         "country": country,
         "policy_year": policy_year,
@@ -553,54 +528,48 @@ def find_optimal_threshold_for_group(g: pd.DataFrame) -> dict:
         "f1": best["f1"],
         "net_score": best["net_score"],
 
-        # Canonical confusion matrix
         "tp": tp,
         "fp": fp,
         "fn": fn,
         "tn": tn,
 
-        # Readable aliases
         "above_threshold_with_payout": tp,
         "above_threshold_no_payout": fp,
         "below_threshold_with_payout": fn,
         "below_threshold_no_payout": tn,
 
-        # RDD interpretation
-        # Treated = all payout months, whether above or below the rule threshold.
         "rdd_treated_n": tp + fn,
-
-        # Untreated = all above-threshold no-payout months
-        # plus close-below-threshold no-payout months.
         "rdd_untreated_5pct_n": fp + near_counts.get("near_tn_below_5pct", 0),
         "rdd_untreated_10pct_n": fp + near_counts.get("near_tn_below_10pct", 0),
 
-        # Below-threshold near-control diagnostics
         **near_counts,
     }
 
 
-def estimate_thresholds(panel: pd.DataFrame) -> pd.DataFrame:
+def estimate_thresholds(panel: pd.DataFrame, index_col: str) -> pd.DataFrame:
+    panel_index = prepare_panel_for_index(panel, index_col)
+
     results = []
+    group_cols = ["hazard", "index_name", "iso3", "country", "policy_year"]
 
-    group_cols = ["hazard", "iso3", "country", "policy_year"]
-
-    for _, g in panel.groupby(group_cols, sort=True):
+    for _, g in panel_index.groupby(group_cols, sort=True):
         results.append(find_optimal_threshold_for_group(g))
 
     return pd.DataFrame(results)
+
 
 # ============================================================
 # SUMMARY TABLES
 # ============================================================
 
-def summarize_country_hazard(thresholds: pd.DataFrame) -> pd.DataFrame:
+def summarize_country_hazard_index(thresholds: pd.DataFrame) -> pd.DataFrame:
     valid = thresholds[thresholds["n_payout_months"] > 0].copy()
 
     if valid.empty:
         return pd.DataFrame()
 
     return (
-        valid.groupby(["iso3", "country", "hazard"], as_index=False)
+        valid.groupby(["iso3", "country", "hazard", "index_name"], as_index=False)
         .agg(
             n_policy_years_with_payouts=("policy_year", "nunique"),
             total_payout_months=("n_payout_months", "sum"),
@@ -610,8 +579,56 @@ def summarize_country_hazard(thresholds: pd.DataFrame) -> pd.DataFrame:
             mean_sensitivity=("sensitivity", "mean"),
             mean_specificity=("specificity", "mean"),
             mean_f1=("f1", "mean"),
+            total_tp=("tp", "sum"),
+            total_fp=("fp", "sum"),
+            total_fn=("fn", "sum"),
+            total_tn=("tn", "sum"),
+            total_rdd_treated=("rdd_treated_n", "sum"),
+            total_rdd_untreated_5pct=("rdd_untreated_5pct_n", "sum"),
+            total_rdd_untreated_10pct=("rdd_untreated_10pct_n", "sum"),
+            total_near_tn_below_5pct=("near_tn_below_5pct", "sum"),
+            total_near_tn_below_10pct=("near_tn_below_10pct", "sum"),
+            total_near_fn_below_5pct=("near_fn_below_5pct", "sum"),
+            total_near_fn_below_10pct=("near_fn_below_10pct", "sum"),
         )
-        .sort_values(["country", "hazard"])
+        .sort_values(
+            ["hazard", "country", "mean_balanced_accuracy"],
+            ascending=[True, True, False],
+        )
+        .reset_index(drop=True)
+    )
+
+
+def summarize_hazard_index_overall(thresholds: pd.DataFrame) -> pd.DataFrame:
+    valid = thresholds[thresholds["n_payout_months"] > 0].copy()
+
+    if valid.empty:
+        return pd.DataFrame()
+
+    return (
+        valid.groupby(["hazard", "index_name"], as_index=False)
+        .agg(
+            n_country_policy_years=("policy_year", "count"),
+            n_countries=("country", "nunique"),
+            total_payout_months=("n_payout_months", "sum"),
+            mean_accuracy=("accuracy", "mean"),
+            mean_balanced_accuracy=("balanced_accuracy", "mean"),
+            mean_precision=("precision", "mean"),
+            mean_sensitivity=("sensitivity", "mean"),
+            mean_specificity=("specificity", "mean"),
+            mean_f1=("f1", "mean"),
+            total_tp=("tp", "sum"),
+            total_fp=("fp", "sum"),
+            total_fn=("fn", "sum"),
+            total_tn=("tn", "sum"),
+            total_rdd_treated=("rdd_treated_n", "sum"),
+            total_rdd_untreated_5pct=("rdd_untreated_5pct_n", "sum"),
+            total_rdd_untreated_10pct=("rdd_untreated_10pct_n", "sum"),
+        )
+        .sort_values(
+            ["hazard", "mean_balanced_accuracy"],
+            ascending=[True, False],
+        )
         .reset_index(drop=True)
     )
 
@@ -645,35 +662,44 @@ def main():
             payouts_hazard=payouts_hazard,
         )
 
-        thresholds = estimate_thresholds(panel)
-
         panel_out = output_panel_path(hazard, config)
-        thresholds_out = output_threshold_path(hazard, config)
-
         panel.to_csv(panel_out, index=False)
-        thresholds.to_csv(thresholds_out, index=False)
-
         print(f"Saved hazard payout panel: {panel_out}")
-        print(f"Saved thresholds:          {thresholds_out}")
 
-        all_thresholds.append(thresholds)
+        for index_col in config["index_columns"]:
+            print(f"\nEstimating thresholds for index: {index_col}")
+
+            thresholds = estimate_thresholds(panel, index_col=index_col)
+
+            thresholds_out = THRESHOLD_OUT_DIR / (
+                f"trigger_thresholds_{hazard}_{safe_index_name(index_col)}_"
+                f"{config['start_year']}_{config['end_year']}.csv"
+            )
+
+            thresholds.to_csv(thresholds_out, index=False)
+            print(f"Saved thresholds: {thresholds_out}")
+
+            all_thresholds.append(thresholds)
 
     if all_thresholds:
         thresholds_all = pd.concat(all_thresholds, ignore_index=True)
 
         thresholds_all_out = OUT_DIR / "trigger_thresholds_all_hazards.csv"
         thresholds_all.to_csv(thresholds_all_out, index=False)
-
-        summary = summarize_country_hazard(thresholds_all)
-
-        summary_out = OUT_DIR / "trigger_summary_country_hazard.csv"
-        summary.to_csv(summary_out, index=False)
-
         print(f"\nSaved all-hazard thresholds: {thresholds_all_out}")
-        print(f"Saved country-hazard summary: {summary_out}")
 
-        print("\nCountry-hazard summary:")
-        print(summary.to_string(index=False))
+        summary_country_index = summarize_country_hazard_index(thresholds_all)
+        summary_country_index_out = OUT_DIR / "trigger_summary_country_hazard_index.csv"
+        summary_country_index.to_csv(summary_country_index_out, index=False)
+        print(f"Saved country-hazard-index summary: {summary_country_index_out}")
+
+        summary_index = summarize_hazard_index_overall(thresholds_all)
+        summary_index_out = OUT_DIR / "trigger_summary_hazard_index_overall.csv"
+        summary_index.to_csv(summary_index_out, index=False)
+        print(f"Saved hazard-index overall summary: {summary_index_out}")
+
+        print("\nHazard-index overall summary:")
+        print(summary_index.to_string(index=False))
 
 
 if __name__ == "__main__":
